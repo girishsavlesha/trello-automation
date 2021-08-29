@@ -1,11 +1,11 @@
 import {} from "dotenv/config";
-import getCards from "./trello-api/getCards";
+import getCards from "../trello-api/getCards";
 import express from "express";
-import trelloConfig from "./trello-config";
+import trelloConfig from "../trello-config";
 import { google } from "googleapis";
 
 const app = express();
-const port = 5000;
+const port = process.env.PORT || 7000;
 app.use(express.json()); // to support JSON-encoded bodies
 app.use(express.urlencoded()); // to support URL-encoded bodies
 
