@@ -29,7 +29,7 @@ app.post("/", async(req, res, next) => {
     translationKey == "action_move_card_from_list_to_list" && cardID
   ) {
     const auth = new google.auth.GoogleAuth({
-        keyFile: "sheets.json",
+        keyFile: "google-credentials.json",
         scopes: "https://www.googleapis.com/auth/spreadsheets",
       });
     
