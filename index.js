@@ -1,7 +1,7 @@
 import {} from "dotenv/config";
-import getCards from "../trello-api/getCards";
+import getCards from "./trello-api/getCards";
 import express from "express";
-import trelloConfig from "../trello-config";
+import trelloConfig from "./trello-config";
 import { google } from "googleapis";
 
 const app = express();
