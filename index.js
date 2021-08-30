@@ -18,38 +18,44 @@ app.get("/", async (req, res) => {
 });
 
 app.post("/", async(req, res, next) => {
-  const actionType = req.body.action.type;
-  const listAfterID = req.body.action.data.listAfter ? req.body.action.data.listAfter.id : null;
-  const translationKey = req.body.action.display.translationKey;
-  const cardID = req.body.action.data.card.id || null;
-  const memberCreator = req.body.action.memberCreator.fullName;
-
-  if (
-    actionType == "updateCard" && listAfterID && listAfterID == trelloConfig.donelistID &&
-    translationKey == "action_move_card_from_list_to_list" && cardID
-  ) {
-    const auth = new google.auth.GoogleAuth({
-        keyFile: "google-credentials.json",
-        scopes: "https://www.googleapis.com/auth/spreadsheets",
-      });
-    
-      const client = await auth.getClient();
-
-      const googleSheets =  google.sheets({ version: "v4", auth: client });
-      getCards(cardID).then(data => {
-        googleSheets.spreadsheets.values.append({
-            auth,
-            spreadsheetId,
-            range: "Sheet1!A:D",
-            valueInputOption: "USER_ENTERED",
-            resource: {
-                values: [
-                    [cardID, data.url, memberCreator, devs[Math.floor(Math.random() * devs.length)]]
-                ]
-            }
-        })
-      }).catch(e => console.log(e))
+  try{
+    const actionType = req.body.action.type;
+    const listAfterID = req.body.action.data.listAfter ? req.body.action.data.listAfter.id : null;
+    const translationKey = req.body.action.display.translationKey;
+    const cardID = req.body.action.data.card.id || null;
+    const memberCreator = req.body.action.memberCreator.fullName;
+  
+    if (
+      actionType == "updateCard" && listAfterID && listAfterID == trelloConfig.donelistID &&
+      translationKey == "action_move_card_from_list_to_list" && cardID
+    ) {
+      const auth = new google.auth.GoogleAuth({
+          keyFile: "google-credentials.json",
+          scopes: "https://www.googleapis.com/auth/spreadsheets",
+        });
+      
+        const client = await auth.getClient();
+  
+        const googleSheets =  google.sheets({ version: "v4", auth: client });
+        getCards(cardID).then(data => {
+          googleSheets.spreadsheets.values.append({
+              auth,
+              spreadsheetId,
+              range: "Sheet1!A:D",
+              valueInputOption: "USER_ENTERED",
+              resource: {
+                  values: [
+                      [cardID, data.url, memberCreator, devs[Math.floor(Math.random() * devs.length)]]
+                  ]
+              }
+          })
+        }).catch(e => console.log(e))
+    }
   }
+  catch(e){
+    console.log(e);
+  }
+
 }),
   app.listen(port, () => {
     console.log(`app is running at http://localhost:${port}`);
