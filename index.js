@@ -40,7 +40,7 @@ app.post("/", async(req, res, next) => {
         googleSheets.spreadsheets.values.append({
             auth,
             spreadsheetId,
-            range: "Sheet1!A:C",
+            range: "Sheet1!A:D",
             valueInputOption: "USER_ENTERED",
             resource: {
                 values: [
