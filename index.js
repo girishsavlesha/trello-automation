@@ -55,6 +55,11 @@ app.post("/", async(req, res, next) => {
   catch(e){
     console.log(e);
   }
+  finally{
+    res.status(200).json({
+      message: 'success'
+    })
+  }
 
 }),
   app.listen(port, () => {
