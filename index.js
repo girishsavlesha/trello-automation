@@ -44,7 +44,7 @@ app.post("/", async(req, res, next) => {
             valueInputOption: "USER_ENTERED",
             resource: {
                 values: [
-                    [data.url, memberCreator, devs[Math.floor(Math.random() * devs.length)]]
+                    [cardID, data.url, memberCreator, devs[Math.floor(Math.random() * devs.length)]]
                 ]
             }
         })
